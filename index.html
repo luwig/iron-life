@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>IRON LIFE — 헬스장 인생</title>
+<style>
+:root{--bg:#101216;--panel:#191c22;--panel2:#22262e;--text:#f2f4f7;--muted:#9da4af;--accent:#ffb020;--good:#48d597;--bad:#ff647c;--line:#303640}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0c0e12,#16191f);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:900px;margin:auto;padding:12px 12px 32px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.logo{font-weight:900;letter-spacing:1px;font-size:22px}.day{color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px}.stat b{display:block;font-size:17px}.stat span{font-size:11px;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-top:10px;padding:12px}.hero{position:relative;overflow:hidden;min-height:310px;background:#15181d}
+.scene{height:250px;border-radius:12px;background:
+radial-gradient(circle at 15% 18%,#3a3e45 0 2px,transparent 3px),
+linear-gradient(180deg,#252a31 0 68%,#15171b 68%);position:relative;overflow:hidden}
+.floor{position:absolute;left:0;right:0;bottom:0;height:82px;background:repeating-linear-gradient(90deg,#181a1e 0 55px,#1c1f24 55px 58px)}
+.window{position:absolute;top:24px;right:24px;width:125px;height:92px;border:5px solid #101216;background:linear-gradient(135deg,#334353,#18232e)}
+.rack{position:absolute;right:23%;bottom:73px;width:125px;height:100px;border-left:7px solid #080a0d;border-right:7px solid #080a0d}
+.rack:before,.rack:after{content:"";position:absolute;left:-18px;right:-18px;height:9px;background:#07090c;top:22px;box-shadow:0 42px #07090c}
+.avatar{position:absolute;left:22%;bottom:71px;width:86px;height:150px;transition:.15s transform}
+.head{position:absolute;top:0;left:30px;width:28px;height:28px;border-radius:50%;background:#c9916d}.torso{position:absolute;top:26px;left:22px;width:45px;height:66px;border-radius:15px 15px 10px 10px;background:#e3e7eb}.arm{position:absolute;top:32px;width:17px;height:65px;border-radius:12px;background:#c9916d;transform-origin:top}.arm.l{left:8px;transform:rotate(18deg)}.arm.r{right:5px;transform:rotate(-18deg)}.leg{position:absolute;top:86px;width:20px;height:68px;background:#303741;border-radius:8px}.leg.l{left:24px}.leg.r{right:20px}
+.avatar.lift .arm.l{transform:rotate(-58deg)}.avatar.lift .arm.r{transform:rotate(58deg)}.avatar.lift .torso{background:#f0f2f4}.avatar.run{animation:bob .35s infinite alternate}
+@keyframes bob{to{transform:translateY(-6px)}}
+.bar{position:absolute;left:-8px;top:28px;width:120px;height:7px;background:#111;border-radius:8px;box-shadow:-7px 0 0 7px #111,127px 0 0 7px #111}
+.sceneText{position:absolute;left:12px;bottom:10px;background:#090b0dcc;border:1px solid #343941;border-radius:10px;padding:7px 9px;font-size:12px}
+h2{font-size:16px;margin:0 0 9px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+button{border:0;border-radius:11px;padding:12px;background:var(--panel2);color:var(--text);font-weight:800;cursor:pointer;border:1px solid #353b45}button:active{transform:translateY(1px)}button.primary{background:var(--accent);color:#17120a;border-color:#d99614}button:disabled{opacity:.45;cursor:not-allowed}
+.exercise small,.food small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
+.progress{height:8px;background:#0d0f12;border-radius:9px;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;background:var(--accent);width:0}
+.log{height:175px;overflow:auto;background:#0d0f12;border-radius:11px;padding:9px;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cbd1d9}.log div{border-bottom:1px solid #20242b;padding:3px 0}
+.message{background:#11151b;border-left:3px solid var(--accent);padding:9px;border-radius:8px;font-size:13px;line-height:1.45}
+.footer{color:#6f7680;text-align:center;font-size:11px;padding:16px 0}.ad{min-height:64px;border:1px dashed #3a4048;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6f7680;font-size:11px;background:#121419}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}.scene{height:235px}.grid{grid-template-columns:1fr}.hero{min-height:295px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div class="logo">IRON LIFE</div><div class="day" id="clock">DAY 1 · 06:00</div></div>
+
+  <div class="stats">
+    <div class="stat"><b id="muscle">42.0 kg</b><span>근육량</span></div>
+    <div class="stat"><b id="fat">18.0%</b><span>체지방</span></div>
+    <div class="stat"><b id="energy">100</b><span>에너지</span></div>
+    <div class="stat"><b id="money">$120</b><span>생활비</span></div>
+  </div>
+
+  <section class="card hero">
+    <div class="scene">
+      <div class="window"></div><div class="rack"></div><div class="floor"></div>
+      <div class="avatar" id="avatar"><div class="head"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div></div>
+      <div class="sceneText" id="sceneText">헬스장 · 오늘의 운동을 선택하세요</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🏋️ 실시간 운동</h2>
+    <div class="grid">
+      <button class="exercise" onclick="train('bench',8,18,3)">벤치프레스<small>에너지 -18 · 근육 +0.08</small></button>
+      <button class="exercise" onclick="train('squat',10,22,4)">스쿼트<small>에너지 -22 · 근육 +0.10</small></button>
+      <button class="exercise" onclick="train('deadlift',12,25,5)">데드리프트<small>에너지 -25 · 근육 +0.12</small></button>
+      <button class="exercise" onclick="train('curl',5,10,2)">덤벨 컬<small>에너지 -10 · 근육 +0.05</small></button>
+    </div>
+    <div class="progress"><i id="sessionBar"></i></div>
+  </section>
+
+  <section class="card">
+    <h2>💬 휴식 / 생활 — 문자로 처리</h2>
+    <div class="grid">
+      <button onclick="rest()">침대에 누워 쉰다<small>시간 +2h · 에너지 +35</small></button>
+      <button onclick="eat('meal')">닭가슴살 + 밥<small>$8 · 에너지 +25 · 회복</small></button>
+      <button onclick="eat('junk')">버거 세트<small>$6 · 에너지 +18 · 체지방 증가</small></button>
+      <button onclick="shower()">샤워하고 출근<small>시간 +1h · 기분 +</small></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="message" id="message">[문자] 코치: 오늘은 60분만 제대로 해도 충분합니다. 과훈련은 손해입니다.</div>
+  </section>
+
+  <section class="card">
+    <h2>📱 생활 기록</h2>
+    <div class="log" id="log"></div>
+  </section>
+
+  <section class="card ad">광고 영역 · 실제 서비스에서는 AdSense 등 광고 SDK를 연결</section>
+  <div class="footer">IRON LIFE prototype · 광고는 현재 테스트 영역입니다.</div>
+</div>
+
+<script>
+const S={day:1,hour:6,muscle:42,fat:18,energy:100,money:120,session:0, mood:70};
+const $=id=>document.getElementById(id);
+function fmt(){ $('muscle').textContent=S.muscle.toFixed(2)+' kg'; $('fat').textContent=S.fat.toFixed(1)+'%'; $('energy').textContent=Math.round(S.energy); $('money').textContent='$'+Math.round(S.money); $('clock').textContent=`DAY ${S.day} · ${String(S.hour).padStart(2,'0')}:00`; $('sessionBar').style.width=Math.min(100,S.session/60*100)+'%';}
+function log(t){let d=document.createElement('div');d.textContent=`[${String(S.hour).padStart(2,'0')}:00] ${t}`;$('log').prepend(d)}
+function time(h){S.hour+=h;while(S.hour>=24){S.hour-=24;S.day++;S.energy=Math.min(100,S.energy+20);S.money+=40;S.fat=Math.max(8,S.fat-.05);log('하루가 끝났습니다. 월급 +$40, 수면 보너스가 적용됩니다.');}}
+function train(type,sets,energyCost,muscleGain){if(S.energy<energyCost){$('message').textContent='[문자] 몸이 너무 지쳤습니다. 먼저 쉬거나 식사하세요.';return}S.energy-=energyCost;S.muscle+=muscleGain/100;S.fat=Math.max(5,S.fat-.03);S.session+=sets;$('avatar').classList.add('lift');$('sceneText').textContent='무게를 들어 올리는 중…';setTimeout(()=>{$('avatar').classList.remove('lift');$('sceneText').textContent='세트 완료. 다음 세트를 선택하세요.'},650);time(1);log(`${type} 운동 완료 · ${sets}세트 · 근육량 +${muscleGain/100}kg`);$('message').textContent='[문자] 코치: 좋습니다. 한 세트 더 할까요, 아니면 회복할까요?';fmt();}
+function rest(){S.energy=Math.min(100,S.energy+35);S.mood=Math.min(100,S.mood+8);time(2);log('침대에서 휴식 · 에너지 +35');$('message').textContent='[문자] 친구: 푹 쉬었네. 오늘 운동 기록 봤어.');fmt();}
+function eat(kind){let cost=kind==='meal'?8:6;if(S.money<cost){$('message').textContent='[문자] 통장 잔액이 부족합니다.';return}S.money-=cost;S.energy=Math.min(100,S.energy+(kind==='meal'?25:18));if(kind==='junk')S.fat+=.35;else S.muscle+=.02;time(1);log(kind==='meal'?'닭가슴살과 밥을 먹음 · 회복':'버거 세트 · 체지방 +0.35%');$('message').textContent=kind==='meal'?'[문자] 코치: 단백질과 탄수화물 보충 완료.':'[문자] 코치: 맛은 좋지만 매일 이러면 체지방이 올라갑니다.';fmt();}
+function shower(){time(1);S.mood=Math.min(100,S.mood+5);log('샤워 후 출근 · 기분 +5');$('message').textContent='[문자] 직장 동료: 오늘도 헬스장 갔다 왔어요?';fmt();}
+fmt();log('새로운 인생이 시작되었습니다. 헬스장에 도착했습니다.');
+</script>
+</body>
+</html>
